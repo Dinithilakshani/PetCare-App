@@ -1,109 +1,217 @@
-import React, { useState } from 'react';
 import {
   View,
   Text,
-  Pressable,
   TextInput,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-  ImageBackground,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { TailwindProvider } from 'tailwind-rn';
-import { LinearGradient } from 'expo-linear-gradient';
-import utilities from './tailwind.json';
-import { login } from '@/services/authService';
+  StyleSheet,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native"
+import React, { useState } from "react"
+import { useRouter } from "expo-router"
+import { login } from "@/services/authService"
+import { LinearGradient } from "expo-linear-gradient"
+import { FontAwesome5 } from "@expo/vector-icons"
+import Animated, { BounceIn, FadeIn } from "react-native-reanimated"
 
 const Login = () => {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const handleLogin = async () => {
-    if (isLoading) return;
+    if (!email || !password) {
+      Alert.alert("Error", "Please enter both email and password")
+      return
+    }
+    if (isLoading) return
 
-    setIsLoading(true);
-    await login(email, password)
-      .then(() => {
-        router.push('/home');
-      })
-      .catch((err) => {
-        Alert.alert('Login Failed', 'Something went wrong');
-        console.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+    setIsLoading(true)
+    try {
+      await login(email, password)
+      router.push("/home")
+    } catch (err) {
+      Alert.alert("Login Failed", "Incorrect email or password")
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <TailwindProvider utilities={utilities}>
-      <ImageBackground
-        source={{ uri: 'https://placeimg.com/640/480/animals' }}
-        className="flex-1"
-        resizeMode="cover"
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <LinearGradient
+        colors={["#4CAF50", "#81C784"]}
+        style={styles.gradient}
       >
-        <LinearGradient
-          colors={['rgba(255,248,225,0.8)', 'rgba(77,182,172,0.7)']}
-          className="flex-1 justify-center items-center p-6"
-        >
-          {/* Logo/Title */}
-          <View className="mb-8 items-center">
-            <Text className="text-4xl font-bold text-teal">Pet Care</Text>
-            <Text className="text-lg text-gray-700 mt-1">Sign in to care for your pets!</Text>
+        <Animated.View entering={BounceIn.duration(1000)} style={styles.card}>
+          <View style={styles.header}>
+            <FontAwesome5 name="paw" size={40} color="#2E7D32" />
+            <Text style={styles.title}>PetCare Hub</Text>
+            <Text style={styles.subtitle}>Login to care for your furry friends!</Text>
           </View>
 
-          {/* Input Fields */}
-          <View className="w-full max-w-md">
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-              className="bg-cream border border-teal rounded-lg px-4 py-3 mb-4 text-teal text-lg shadow-sm"
-              placeholderTextColor="#4DB6AC"
-              autoCapitalize="none"
-            />
-            <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              className="bg-cream border border-teal rounded-lg px-4 py-3 mb-4 text-teal text-lg shadow-sm"
-              placeholderTextColor="#4DB6AC"
-            />
+          <Animated.View entering={FadeIn.duration(800).delay(200)} style={styles.form}>
+            <View style={styles.inputWrapper}>
+              <FontAwesome5 name="envelope" size={20} color="#388E3C" style={styles.icon} />
+              <TextInput
+                placeholder="Email"
+                placeholderTextColor="#78909C"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
 
-            {/* Login Button */}
+            <View style={styles.inputWrapper}>
+              <FontAwesome5 name="lock" size={20} color="#388E3C" style={styles.icon} />
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="#78909C"
+                value={password}
+                onChangeText={setPassword}
+                style={styles.input}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.toggleIcon}
+              >
+                <FontAwesome5
+                  name={showPassword ? "eye" : "eye-slash"}
+                  size={18}
+                  color="#388E3C"
+                />
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
               onPress={handleLogin}
-              className="bg-yellow rounded-lg p-4 items-center shadow-lg"
+              style={[styles.loginButton, isLoading && styles.buttonDisabled]}
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color="#4DB6AC" size="large" />
+                <ActivityIndicator color="#FFFFFF" size="small" />
               ) : (
-                <Text className="text-teal font-bold text-xl">Login</Text>
+                <Text style={styles.buttonText}>Login</Text>
               )}
             </TouchableOpacity>
-          </View>
 
-          {/* Register Link */}
-          <Pressable
-            className="mt-4"
-            onPress={() => router.push('/register')}
-          >
-            <Text className="text-teal text-lg underline">
-              Don't have an account? Register
-            </Text>
-          </Pressable>
-        </LinearGradient>
-      </ImageBackground>
-    </TailwindProvider>
-  );
-};
+            <TouchableOpacity
+              onPress={() => router.push("/register")}
+              style={styles.registerButton}
+            >
+              <Text style={styles.registerText}>
+                New to PetCare? <Text style={styles.registerLink}>Sign Up</Text>
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </Animated.View>
+      </LinearGradient>
+    </KeyboardAvoidingView>
+  )
+}
 
-export default Login;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradient: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 24,
+    width: "90%",
+    maxWidth: 400,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "700",
+    color: "#2E7D32",
+    marginTop: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#616161",
+    marginTop: 8,
+    textAlign: "center",
+  },
+  form: {
+    width: "100%",
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F1F8E9",
+    borderRadius: 10,
+    marginBottom: 16,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: "#C8E6C9",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: "#212121",
+  },
+  toggleIcon: {
+    padding: 10,
+  },
+  loginButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: "#A5D6A7",
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  registerButton: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  registerText: {
+    fontSize: 16,
+    color: "#616161",
+  },
+  registerLink: {
+    color: "#2E7D32",
+    fontWeight: "600",
+  },
+})
 
-
-
+export default Login
