@@ -8,39 +8,39 @@ import {
   StyleSheet,
   Platform,
   KeyboardAvoidingView,
-} from "react-native"
-import React, { useState } from "react"
-import { useRouter } from "expo-router"
-import { login } from "@/services/authService"
-import { LinearGradient } from "expo-linear-gradient"
-import { FontAwesome5 } from "@expo/vector-icons"
-import Animated, { BounceIn, FadeIn } from "react-native-reanimated"
+} from "react-native";
+import React, { useState } from "react";
+import { useRouter } from "expo-router";
+import { login } from "@/services/authService";
+import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
+import Animated, { BounceIn, FadeIn } from "react-native-reanimated";
 
 const Login = () => {
-  const router = useRouter()
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const router = useRouter();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Error", "Please enter both email and password")
-      return
+      Alert.alert("Error", "Please enter both email and password");
+      return;
     }
-    if (isLoading) return
+    if (isLoading) return;
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await login(email, password)
-      router.push("/home")
+      await login(email, password);
+      router.push("/home");
     } catch (err) {
-      Alert.alert("Login Failed", "Incorrect email or password")
-      console.error(err)
+      Alert.alert("Login Failed", "Incorrect email or password");
+      console.error(err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -48,22 +48,22 @@ const Login = () => {
       style={styles.container}
     >
       <LinearGradient
-        colors={["#4CAF50", "#81C784"]}
+        colors={["#0d9488", "#059669"]}
         style={styles.gradient}
       >
         <Animated.View entering={BounceIn.duration(1000)} style={styles.card}>
           <View style={styles.header}>
-            <FontAwesome5 name="paw" size={40} color="#2E7D32" />
+            <FontAwesome5 name="paw" size={40} color="#0d9488" />
             <Text style={styles.title}>PetCare Hub</Text>
             <Text style={styles.subtitle}>Login to care for your furry friends!</Text>
           </View>
 
           <Animated.View entering={FadeIn.duration(800).delay(200)} style={styles.form}>
             <View style={styles.inputWrapper}>
-              <FontAwesome5 name="envelope" size={20} color="#388E3C" style={styles.icon} />
+              <FontAwesome5 name="envelope" size={20} color="#0d9488" style={styles.icon} />
               <TextInput
                 placeholder="Email"
-                placeholderTextColor="#78909C"
+                placeholderTextColor="#6b7280"
                 value={email}
                 onChangeText={setEmail}
                 style={styles.input}
@@ -73,10 +73,10 @@ const Login = () => {
             </View>
 
             <View style={styles.inputWrapper}>
-              <FontAwesome5 name="lock" size={20} color="#388E3C" style={styles.icon} />
+              <FontAwesome5 name="lock" size={20} color="#0d9488" style={styles.icon} />
               <TextInput
                 placeholder="Password"
-                placeholderTextColor="#78909C"
+                placeholderTextColor="#6b7280"
                 value={password}
                 onChangeText={setPassword}
                 style={styles.input}
@@ -90,7 +90,7 @@ const Login = () => {
                 <FontAwesome5
                   name={showPassword ? "eye" : "eye-slash"}
                   size={18}
-                  color="#388E3C"
+                  color="#0d9488"
                 />
               </TouchableOpacity>
             </View>
@@ -101,7 +101,7 @@ const Login = () => {
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color="#FFFFFF" size="small" />
+                <ActivityIndicator color="#ffffff" size="small" />
               ) : (
                 <Text style={styles.buttonText}>Login</Text>
               )}
@@ -119,12 +119,13 @@ const Login = () => {
         </Animated.View>
       </LinearGradient>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f3f4f6", // bg-gray-100
   },
   gradient: {
     flex: 1,
@@ -133,16 +134,18 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#ffffff", // bg-white
     borderRadius: 20,
     padding: 24,
     width: "90%",
     maxWidth: 400,
+    borderWidth: 1,
+    borderColor: "#e5e7eb", // border-gray-200
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
   header: {
     alignItems: "center",
@@ -151,12 +154,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "700",
-    color: "#2E7D32",
+    color: "#111827", // text-gray-900
     marginTop: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: "#616161",
+    color: "#4b5563", // text-gray-600
     marginTop: 8,
     textAlign: "center",
   },
@@ -166,12 +169,12 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F1F8E9",
+    backgroundColor: "#ffffff", // bg-white
     borderRadius: 10,
     marginBottom: 16,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: "#C8E6C9",
+    borderColor: "#e5e7eb", // border-gray-200
   },
   icon: {
     marginRight: 10,
@@ -180,23 +183,23 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     fontSize: 16,
-    color: "#212121",
+    color: "#111827", // text-gray-900
   },
   toggleIcon: {
     padding: 10,
   },
   loginButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#0d9488", // bg-teal-600
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
   },
   buttonDisabled: {
-    backgroundColor: "#A5D6A7",
+    backgroundColor: "#99f6e4", // bg-teal-200
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: "#ffffff", // text-white
     fontSize: 18,
     fontWeight: "600",
   },
@@ -206,12 +209,12 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: 16,
-    color: "#616161",
+    color: "#4b5563", // text-gray-600
   },
   registerLink: {
-    color: "#2E7D32",
+    color: "#0d9488", // text-teal-600
     fontWeight: "600",
   },
-})
+});
 
-export default Login
+export default Login;

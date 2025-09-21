@@ -1,10 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, Alert, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getAllTaskData, taskColRef } from "@/services/taskService";
-import { useRouter, useSegments } from "expo-router";
+import { useRouter } from "expo-router";
 import { Task } from "@/types/task";
 import { useLoader } from "@/context/LoaderContext";
-import { onSnapshot } from "firebase/firestore";
+import { onSnapshot, deleteDoc, doc } from "firebase/firestore";
 
 const TasksScreen = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -32,15 +32,24 @@ const TasksScreen = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleDelete = (taskId: string) => {
+  const handleDelete = async (taskId: string) => {
     Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
       { text: "Cancel", style: "cancel" },
       {
         text: "Delete",
         style: "destructive",
-        onPress: () => {
-          console.log("Deleting task:", taskId);
-          // Add delete task logic here
+        onPress: async () => {
+          try {
+            showLoader();
+            const taskRef = doc(taskColRef, taskId);
+            await deleteDoc(taskRef);
+            Alert.alert("Success", "Task deleted successfully!");
+          } catch (error) {
+            console.error("Error deleting task:", error);
+            Alert.alert("Error", "Failed to delete task. Please try again.");
+          } finally {
+            hideLoader();
+          }
         },
       },
     ]);
@@ -53,119 +62,121 @@ const TasksScreen = () => {
   );
 
   const getTaskIcon = (task: Task) => {
-    return "📋"; // Customize based on task type or category
+    return "🐾"; // Changed to paw icon for pet care theme
   };
 
   const getPriorityColor = (priority: string = "medium") => {
     switch (priority.toLowerCase()) {
       case "high":
-        return "from-red-400 to-red-500";
+        return "bg-red-500";
       case "medium":
-        return "from-yellow-400 to-orange-500";
+        return "bg-orange-400";
       case "low":
-        return "from-green-400 to-emerald-500";
+        return "bg-green-400";
       default:
-        return "from-blue-400 to-indigo-500";
+        return "bg-blue-400";
     }
   };
 
   return (
-    <View className="flex-1 bg-slate-50">
+    <View className="flex-1 bg-gray-100">
       {/* Header */}
-      <View className="bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 pb-6 pt-16 px-6 rounded-b-[40px] shadow-lg">
-        <View className="flex-row items-center justify-between mb-6">
-          <View className="flex-1">
-            <Text className="text-white text-3xl font-bold mb-2">Pet Record</Text>
-            <Text className="text-emerald-100 text-lg">
+      <View className="bg-gradient-to-r from-teal-600 to-emerald-600 pt-12 pb-6 px-5 rounded-b-3xl shadow-md">
+        <View className="flex-row justify-between items-center mb-4">
+          <View>
+            <Text className="text-white text-4xl font-extrabold tracking-tight">
+              Pet Records
+            </Text>
+            <Text className="text-teal-100 text-base font-medium mt-1">
               {tasks.length} tasks • {filteredTasks.filter((t) => t.completed).length} completed
             </Text>
           </View>
-          <View className="flex-row space-x-3">
-            <TouchableOpacity className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl items-center justify-center border border-white/30">
-              <Text className="text-white text-xl">🔔</Text>
+          <View className="flex-row space-x-2">
+            <TouchableOpacity className="w-10 h-10 bg-teal-700/50 rounded-full items-center justify-center active:scale-90 transition-transform">
+              <Text className="text-white text-lg">🔔</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl items-center justify-center border border-white/30">
-              <Text className="text-white text-xl">⚙️</Text>
+            <TouchableOpacity className="w-10 h-10 bg-teal-700/50 rounded-full items-center justify-center active:scale-90 transition-transform">
+              <Text className="text-white text-lg">⚙️</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Search Bar */}
-        <View className="bg-white/90 backdrop-blur-lg rounded-2xl px-5 py-4 flex-row items-center shadow-sm border border-white/50">
-          <View className="w-8 h-8 bg-emerald-100 rounded-full items-center justify-center mr-3">
-            <Text className="text-emerald-600 text-lg">🔍</Text>
-          </View>
+        <View className="bg-white/95 rounded-xl px-4 py-3 flex-row items-center shadow-sm border border-teal-100">
+          <Text className="text-teal-600 text-lg mr-3">🔍</Text>
           <TextInput
-            placeholder="Search tasks..."
-            placeholderTextColor="#94a3b8"
+            placeholder="Search tasks"
+            placeholderTextColor="#6b7280"
             value={searchQuery}
             onChangeText={setSearchQuery}
-            className="flex-1 text-gray-800 text-base font-medium"
+            className="flex-1 text-gray-900 text-base font-medium"
           />
         </View>
       </View>
 
-      {/* Tasks List */}
-      <ScrollView className="flex-1 px-6" showsVerticalScrollIndicator={false}>
+      {/* Task List */}
+      <ScrollView className="flex-1 px-5 mt-4" showsVerticalScrollIndicator={false}>
         {filteredTasks.length === 0 ? (
-          <View className="bg-white rounded-3xl p-8 items-center shadow-sm border border-gray-100 mt-8">
-            <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
-              <Text className="text-4xl">📝</Text>
+          <View className="bg-white rounded-2xl p-6 mt-6 items-center shadow-sm border border-gray-200">
+            <View className="w-16 h-16 bg-teal-100 rounded-full items-center justify-center mb-4">
+              <Text className="text-3xl">🐾</Text>
             </View>
-            <Text className="text-gray-800 font-bold text-xl mb-2">No Records Found</Text>
-            <Text className="text-gray-500 text-center text-base">
-              {searchQuery ? "Try adjusting your search" : "Create your first task to get started"}
+            <Text className="text-gray-800 font-semibold text-lg mb-2">
+              No Records Found
+            </Text>
+            <Text className="text-gray-600 text-sm text-center">
+              {searchQuery ? "Try a different search term" : "Add a new task to get started"}
             </Text>
           </View>
         ) : (
-          <View className="space-y-4">
+          <View className="space-y-3 mb-20">
             {filteredTasks.map((task) => (
               <View
                 key={task.id}
-                className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100"
+                className="bg-white rounded-xl p-5 shadow-sm border border-gray-200"
               >
-                {/* Task Header */}
-                <View className="flex-row items-start justify-between mb-4">
-                  <View className="flex-row items-start flex-1">
+                <View className="flex-row items-center justify-between">
+                  <View className="flex-row items-center flex-1">
                     <View
-                      className={`w-12 h-12 bg-gradient-to-br ${getPriorityColor(
+                      className={`w-10 h-10 ${getPriorityColor(
                         task.priority
-                      )} rounded-2xl items-center justify-center mr-4 shadow-md`}
+                      )} rounded-lg items-center justify-center mr-4`}
                     >
-                      <Text className="text-white text-xl">{getTaskIcon(task)}</Text>
+                      <Text className="text-white text-lg">{getTaskIcon(task)}</Text>
                     </View>
                     <View className="flex-1">
-                      <Text className="text-gray-800 font-bold text-lg mb-1 leading-tight">
+                      <Text className="text-gray-900 font-semibold text-lg mb-1">
                         {task.title}
                       </Text>
-                      <Text className="text-gray-500 text-base mb-3 leading-relaxed">
+                      <Text
+                        className="text-gray-600 text-sm"
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                      >
                         {task.description}
                       </Text>
-                      {/* Task Meta Info */}
-                      <View className="flex-row items-center flex-wrap">
+                      <View className="flex-row items-center mt-2 space-x-2">
                         {task.priority && (
                           <View
-                            className={`px-3 py-1 rounded-full mr-2 mb-2 bg-gradient-to-r ${getPriorityColor(
+                            className={`px-2 py-1 rounded-md ${getPriorityColor(
                               task.priority
-                            )}`}
+                            )} bg-opacity-20`}
                           >
-                            <Text className="text-white text-xs font-bold uppercase tracking-wide">
+                            <Text className="text-xs font-bold uppercase text-gray-800">
                               {task.priority}
                             </Text>
                           </View>
                         )}
                         {task.dueDate && (
-                          <View className="bg-gray-100 px-3 py-1 rounded-full mr-2 mb-2">
-                            <Text className="text-gray-600 text-xs font-medium">
+                          <View className="px-2 py-1 rounded-md bg-gray-100">
+                            <Text className="text-xs font-medium text-gray-600">
                               📅 {new Date(task.dueDate).toLocaleDateString()}
                             </Text>
                           </View>
                         )}
                         {task.completed && (
-                          <View className="bg-green-100 px-3 py-1 rounded-full mr-2 mb-2">
-                            <Text className="text-green-600 text-xs font-bold">
-                              ✅ COMPLETED
-                            </Text>
+                          <View className="px-2 py-1 rounded-md bg-green-100">
+                            <Text className="text-xs font-bold text-green-700">✅ Done</Text>
                           </View>
                         )}
                       </View>
@@ -174,44 +185,36 @@ const TasksScreen = () => {
                 </View>
 
                 {/* Action Buttons */}
-                <View className="flex-row space-x-3 mt-4 pt-4 border-t border-gray-100">
+                <View className="flex-row space-x-2 mt-4 pt-3 border-t border-gray-200">
                   <TouchableOpacity
                     onPress={() => router.push(`/(dashboard)/tasks/${task.id}`)}
-                    className="flex-1 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl py-3 flex-row items-center justify-center"
+                    className="flex-1 bg-teal-50 rounded-lg py-2 items-center justify-center active:scale-95 transition-transform"
                   >
-                    <Text className="text-blue-600 text-lg mr-2">✏️</Text>
-                    <Text className="text-blue-700 font-bold">Edit</Text>
+                    <Text className="text-teal-700 font-semibold">Edit</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => handleDelete(task.id)}
-                    className="flex-1 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl py-3 flex-row items-center justify-center"
+                    className="flex-1 bg-red-50 rounded-lg py-2 items-center justify-center active:scale-95 transition-transform"
                   >
-                    <Text className="text-red-600 text-lg mr-2">🗑️</Text>
-                    <Text className="text-red-700 font-bold">Delete</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="w-12 h-12 bg-gray-50 border-2 border-gray-200 rounded-2xl items-center justify-center">
-                    <Text className="text-gray-600 text-lg">⋯</Text>
+                    <Text className="text-red-700 font-semibold">Delete</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             ))}
           </View>
         )}
-        {/* Bottom Spacing */}
-        <View className="h-24" />
       </ScrollView>
 
       {/* Floating Action Button */}
-      <View className="absolute bottom-8 right-6">
+      <View className="absolute bottom-6 right-5">
         <TouchableOpacity
           onPress={() => router.push("/(dashboard)/tasks/new")}
-          className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl items-center justify-center shadow-2xl shadow-emerald-500/25 active:scale-95"
+          className="w-14 h-14 bg-teal-600 rounded-full items-center justify-center shadow-lg active:scale-90 transition-transform"
         >
-          <Text className="text-white text-3xl font-light">+</Text>
+          <Text className="text-white text-2xl font-bold">+</Text>
         </TouchableOpacity>
-        {/* FAB Label */}
-        <View className="absolute -left-24 top-1/2 -translate-y-1/2 bg-gray-800 px-1 py-2 rounded-xl">
-          <Text className="text-white text-sm font-medium">Add  Recoard</Text>
+        <View className="absolute -left-20 top-1/2 -translate-y-1/2 bg-teal-800 px-3 py-1 rounded-lg">
+          <Text className="text-white text-xs font-medium">Add Record</Text>
         </View>
       </View>
     </View>

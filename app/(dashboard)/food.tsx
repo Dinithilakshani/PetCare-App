@@ -1,9 +1,9 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
 const Food = () => {
-  const [selectedAge, setSelectedAge] = useState('puppy')
-  const [selectedAnimal, setSelectedAnimal] = useState('dog')
+  const [selectedAge, setSelectedAge] = useState('puppy');
+  const [selectedAnimal, setSelectedAnimal] = useState('dog');
 
   const nutritionData = {
     dog: {
@@ -17,31 +17,31 @@ const Food = () => {
             description: '22-32% protein, 10-25% fat. Look for AAFCO certification.',
             amount: '1/4 to 2 cups daily (depending on size)',
             timing: 'Morning, afternoon, evening',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Wet Puppy Food',
             description: 'Can supplement dry food. Higher moisture content.',
             amount: '1-3 cans daily (based on size)',
             timing: 'Mix with dry food',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Puppy Treats',
             description: 'Training treats should be small and soft.',
             amount: 'No more than 10% of daily calories',
             timing: 'During training sessions',
-            safety: 'moderate'
+            safety: 'moderate',
           },
           {
             foodType: 'Raw Diet',
             description: 'Consult vet first. Risk of bacteria and nutritional imbalance.',
             amount: 'Vet supervised portions',
             timing: 'Not recommended for puppies',
-            safety: 'caution'
-          }
+            safety: 'caution',
+          },
         ],
-        forbidden: ['Chocolate', 'Grapes', 'Onions', 'Xylitol', 'Cooked bones', 'Avocado']
+        forbidden: ['Chocolate', 'Grapes', 'Onions', 'Xylitol', 'Cooked bones', 'Avocado'],
       },
       adult: {
         title: 'Adult Dog Nutrition (1-7 years)',
@@ -53,31 +53,31 @@ const Food = () => {
             description: '18-25% protein, 8-17% fat. Complete and balanced.',
             amount: '1-3 cups daily (breed dependent)',
             timing: 'Morning and evening',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Grain-Free Options',
             description: 'Good for dogs with grain sensitivities.',
             amount: 'Follow package guidelines',
             timing: 'Regular meal times',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Fresh Vegetables',
             description: 'Carrots, green beans, sweet potato as treats.',
             amount: '10% of daily intake max',
             timing: 'Between meals or training',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Table Scraps',
             description: 'Most human food is not suitable for dogs.',
             amount: 'Avoid completely',
             timing: 'Never',
-            safety: 'danger'
-          }
+            safety: 'danger',
+          },
         ],
-        forbidden: ['Chocolate', 'Grapes', 'Onions', 'Garlic', 'Macadamia nuts', 'Alcohol']
+        forbidden: ['Chocolate', 'Grapes', 'Onions', 'Garlic', 'Macadamia nuts', 'Alcohol'],
       },
       senior: {
         title: 'Senior Dog Nutrition (7+ years)',
@@ -89,32 +89,32 @@ const Food = () => {
             description: 'Lower calories, higher fiber, joint support nutrients.',
             amount: '20% less than adult portions',
             timing: 'Smaller, frequent meals',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Joint Support Supplements',
             description: 'Glucosamine, chondroitin for arthritis prevention.',
             amount: 'As directed by vet',
             timing: 'With meals',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Easily Digestible Foods',
             description: 'Softer textures for dental issues.',
             amount: 'Normal portions, softer consistency',
             timing: 'Regular intervals',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'High-Calorie Foods',
             description: 'Only if weight loss is a concern.',
             amount: 'Vet recommended only',
             timing: 'Monitor closely',
-            safety: 'moderate'
-          }
+            safety: 'moderate',
+          },
         ],
-        forbidden: ['High-sodium foods', 'Excessive treats', 'Hard chew toys', 'Rich fatty foods']
-      }
+        forbidden: ['High-sodium foods', 'Excessive treats', 'Hard chew toys', 'Rich fatty foods'],
+      },
     },
     cat: {
       puppy: {
@@ -127,31 +127,31 @@ const Food = () => {
             description: '30-40% protein, 9-15% fat. Higher calories for growth.',
             amount: '1/4 to 1 cup daily',
             timing: 'Every 4-6 hours',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Wet Kitten Food',
             description: 'Essential for hydration. Higher protein content.',
             amount: '2-4 small cans daily',
             timing: 'With each meal',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Kitten Milk Replacer',
             description: 'Only for orphaned kittens under 4 weeks.',
             amount: 'Every 2-3 hours',
             timing: 'Until weaning',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Adult Cat Food',
             description: 'Not nutritionally adequate for growing kittens.',
             amount: 'Avoid until 12 months',
             timing: 'Never for kittens',
-            safety: 'caution'
-          }
+            safety: 'caution',
+          },
         ],
-        forbidden: ['Milk', 'Tuna', 'Dog food', 'Raw fish', 'Onions', 'Chocolate']
+        forbidden: ['Milk', 'Tuna', 'Dog food', 'Raw fish', 'Onions', 'Chocolate'],
       },
       adult: {
         title: 'Adult Cat Nutrition (1-7 years)',
@@ -163,31 +163,31 @@ const Food = () => {
             description: '26-30% protein, 9-15% fat. Taurine essential.',
             amount: '1/3 to 1/2 cup dry + wet food',
             timing: 'Morning and evening',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Wet Food',
             description: 'Critical for hydration. Prevents kidney issues.',
             amount: '2-3 cans daily',
             timing: 'Every meal',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Cat Treats',
             description: 'Freeze-dried meat, commercial cat treats.',
             amount: 'Less than 10% of daily calories',
             timing: 'Training/bonding',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Plant-Based Diet',
             description: 'Cats are obligate carnivores. Plants insufficient.',
             amount: 'Not recommended',
             timing: 'Never',
-            safety: 'danger'
-          }
+            safety: 'danger',
+          },
         ],
-        forbidden: ['Tuna (regular)', 'Raw fish', 'Milk', 'Onions', 'Garlic', 'Chocolate']
+        forbidden: ['Tuna (regular)', 'Raw fish', 'Milk', 'Onions', 'Garlic', 'Chocolate'],
       },
       senior: {
         title: 'Senior Cat Nutrition (7+ years)',
@@ -199,32 +199,32 @@ const Food = () => {
             description: 'Adjusted protein levels, kidney support nutrients.',
             amount: 'Maintain ideal body weight',
             timing: 'Consistent schedule',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Kidney Support Diet',
             description: 'Lower phosphorus if kidney disease present.',
             amount: 'Veterinary prescription only',
             timing: 'As prescribed',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Appetite Stimulants',
             description: 'Warmed food, strong-smelling options.',
             amount: 'Small, frequent portions',
             timing: 'When appetite decreases',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'High-Protein Foods',
             description: 'Unless kidney disease present.',
             amount: 'Monitor with vet',
             timing: 'Regular meals',
-            safety: 'moderate'
-          }
+            safety: 'moderate',
+          },
         ],
-        forbidden: ['Low-quality foods', 'Excessive phosphorus', 'Dehydrating foods', 'Hard kibble only']
-      }
+        forbidden: ['Low-quality foods', 'Excessive phosphorus', 'Dehydrating foods', 'Hard kibble only'],
+      },
     },
     rabbit: {
       puppy: {
@@ -237,31 +237,31 @@ const Food = () => {
             description: 'Essential for dental health and digestion. Fresh daily.',
             amount: 'Body-size portion daily',
             timing: 'Always available',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'High-Quality Pellets',
             description: '18-20% protein, 14-18% fiber. Timothy hay-based.',
             amount: '1/4 to 1/2 cup per pound',
             timing: 'Morning and evening',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Alfalfa Hay',
             description: 'High in calcium for growing rabbits.',
             amount: 'Small portions with timothy',
             timing: 'With main hay',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Fresh Vegetables',
             description: 'Introduce gradually after 3 months old.',
             amount: 'Start with 1 tsp, increase slowly',
             timing: 'After hay and pellets',
-            safety: 'moderate'
-          }
+            safety: 'moderate',
+          },
         ],
-        forbidden: ['Iceberg lettuce', 'Beans', 'Seeds', 'Nuts', 'Chocolate', 'Onions', 'Garlic', 'Avocado']
+        forbidden: ['Iceberg lettuce', 'Beans', 'Seeds', 'Nuts', 'Chocolate', 'Onions', 'Garlic', 'Avocado'],
       },
       adult: {
         title: 'Adult Rabbit Nutrition (6 months - 5 years)',
@@ -273,31 +273,31 @@ const Food = () => {
             description: 'Primary food source. Critical for dental wear and gut health.',
             amount: 'Body-size portion daily',
             timing: 'Always available',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Adult Pellets',
             description: '12-16% protein, 18-25% fiber. Timothy hay-based only.',
             amount: '1/4 cup per 5 pounds body weight',
             timing: 'Morning and evening portions',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Leafy Greens',
             description: 'Dark leafy greens: kale, romaine, parsley, cilantro.',
             amount: '2-4 cups per 6 pounds daily',
             timing: 'Fresh daily, variety important',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Fruit Treats',
             description: 'Apple, banana, berries. High sugar content.',
             amount: '1-2 tablespoons max daily',
             timing: 'Occasional treats only',
-            safety: 'moderate'
-          }
+            safety: 'moderate',
+          },
         ],
-        forbidden: ['Alfalfa pellets', 'Seeds', 'Nuts', 'Beans', 'Potatoes', 'Rhubarb', 'Chocolate', 'Dairy']
+        forbidden: ['Alfalfa pellets', 'Seeds', 'Nuts', 'Beans', 'Potatoes', 'Rhubarb', 'Chocolate', 'Dairy'],
       },
       senior: {
         title: 'Senior Rabbit Nutrition (5+ years)',
@@ -309,52 +309,60 @@ const Food = () => {
             description: 'May need softer second-cut hay for easier chewing.',
             amount: 'Unlimited, monitor consumption',
             timing: 'Always available',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Senior Rabbit Pellets',
             description: 'Higher protein (14-18%) if weight loss occurs.',
             amount: '1/4 to 1/2 cup per 5 pounds',
             timing: 'Adjusted based on body condition',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Extra Vegetables',
             description: 'Increase variety and amount if losing weight.',
             amount: '3-5 cups per 6 pounds daily',
             timing: 'Multiple small servings',
-            safety: 'safe'
+            safety: 'safe',
           },
           {
             foodType: 'Critical Care Food',
             description: 'Syringe-feeding formula for appetite loss.',
             amount: 'As directed by exotic vet',
             timing: 'When not eating normally',
-            safety: 'moderate'
-          }
+            safety: 'moderate',
+          },
         ],
-        forbidden: ['Hard pellets', 'Sugary treats', 'Low-quality hay', 'Sudden diet changes']
-      }
-    }
-  }
+        forbidden: ['Hard pellets', 'Sugary treats', 'Low-quality hay', 'Sudden diet changes'],
+      },
+    },
+  };
 
   const getSafetyColor = (safety) => {
-    switch(safety) {
-      case 'safe': return styles.safeFood
-      case 'moderate': return styles.moderateFood
-      case 'caution': return styles.cautionFood
-      default: return styles.dangerFood
+    switch (safety) {
+      case 'safe':
+        return styles.safeFood;
+      case 'moderate':
+        return styles.moderateFood;
+      case 'caution':
+        return styles.cautionFood;
+      default:
+        return styles.dangerFood;
     }
-  }
+  };
 
   const getSafetyText = (safety) => {
-    switch(safety) {
-      case 'safe': return '✅ Recommended'
-      case 'moderate': return '⚠️ With Care'
-      case 'caution': return '⚠️ Caution'
-      default: return '❌ Avoid'
+    switch (safety) {
+      case 'safe':
+        return '✅ Recommended';
+      case 'moderate':
+        return '⚠️ With Care';
+      case 'caution':
+        return '⚠️ Caution';
+      default:
+        return '❌ Avoid';
     }
-  }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -366,7 +374,7 @@ const Food = () => {
 
       {/* Animal Selection */}
       <View style={styles.animalSelector}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.animalButton, selectedAnimal === 'dog' && styles.selectedAnimal]}
           onPress={() => setSelectedAnimal('dog')}
         >
@@ -374,7 +382,7 @@ const Food = () => {
             🐕 Dogs
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.animalButton, selectedAnimal === 'cat' && styles.selectedAnimal]}
           onPress={() => setSelectedAnimal('cat')}
         >
@@ -382,7 +390,7 @@ const Food = () => {
             🐱 Cats
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.animalButton, selectedAnimal === 'rabbit' && styles.selectedAnimal]}
           onPress={() => setSelectedAnimal('rabbit')}
         >
@@ -394,7 +402,7 @@ const Food = () => {
 
       {/* Age Selection */}
       <View style={styles.ageSelector}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.ageButton, selectedAge === 'puppy' && styles.selectedAge]}
           onPress={() => setSelectedAge('puppy')}
         >
@@ -402,7 +410,7 @@ const Food = () => {
             Young
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.ageButton, selectedAge === 'adult' && styles.selectedAge]}
           onPress={() => setSelectedAge('adult')}
         >
@@ -410,7 +418,7 @@ const Food = () => {
             Adult
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.ageButton, selectedAge === 'senior' && styles.selectedAge]}
           onPress={() => setSelectedAge('senior')}
         >
@@ -422,10 +430,7 @@ const Food = () => {
 
       {/* Quick Stats */}
       <View style={styles.statsSection}>
-        <Text style={styles.sectionTitle}>
-          {nutritionData[selectedAnimal][selectedAge].title}
-        </Text>
-        
+        <Text style={styles.sectionTitle}>{nutritionData[selectedAnimal][selectedAge].title}</Text>
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Daily Meals</Text>
@@ -441,7 +446,6 @@ const Food = () => {
       {/* Food Information */}
       <View style={styles.foodSection}>
         <Text style={styles.sectionTitle}>🍽️ Food Guidelines</Text>
-        
         {nutritionData[selectedAnimal][selectedAge].items.map((item, index) => (
           <View key={index} style={styles.foodCard}>
             <View style={styles.cardHeader}>
@@ -452,8 +456,12 @@ const Food = () => {
             </View>
             <Text style={styles.foodDescription}>{item.description}</Text>
             <View style={styles.foodDetails}>
-              <Text style={styles.detailLabel}>Amount: <Text style={styles.detailValue}>{item.amount}</Text></Text>
-              <Text style={styles.detailLabel}>Timing: <Text style={styles.detailValue}>{item.timing}</Text></Text>
+              <Text style={styles.detailLabel}>
+                Amount: <Text style={styles.detailValue}>{item.amount}</Text>
+              </Text>
+              <Text style={styles.detailLabel}>
+                Timing: <Text style={styles.detailValue}>{item.timing}</Text>
+              </Text>
             </View>
           </View>
         ))}
@@ -498,28 +506,28 @@ const Food = () => {
         )}
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fef7f7',
+    backgroundColor: '#f3f4f6', // gray-100
   },
   header: {
-    backgroundColor: '#ec4899',
+    backgroundColor: '#0d9488', // teal-600 (simulating gradient with single color for simplicity)
     padding: 20,
     paddingTop: 50,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#ffffff', // white
     textAlign: 'center',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: 'white',
+    color: '#ccfbf1', // teal-100
     textAlign: 'center',
     marginTop: 5,
     opacity: 0.9,
@@ -531,24 +539,24 @@ const styles = StyleSheet.create({
   },
   animalButton: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff', // white
     padding: 15,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#f3e8ff',
+    borderColor: '#99f6e4', // teal-200
   },
   selectedAnimal: {
-    borderColor: '#ec4899',
-    backgroundColor: '#fce7f3',
+    borderColor: '#0d9488', // teal-600
+    backgroundColor: '#ccfbf1', // teal-100
   },
   animalButtonText: {
     textAlign: 'center',
     fontSize: 16,
     fontWeight: '600',
-    color: '#6b7280',
+    color: '#6b7280', // gray-500
   },
   selectedAnimalText: {
-    color: '#ec4899',
+    color: '#0d9488', // teal-600
   },
   ageSelector: {
     flexDirection: 'row',
@@ -558,24 +566,24 @@ const styles = StyleSheet.create({
   },
   ageButton: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff', // white
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#f3e8ff',
+    borderColor: '#99f6e4', // teal-200
   },
   selectedAge: {
-    borderColor: '#ec4899',
-    backgroundColor: '#fce7f3',
+    borderColor: '#0d9488', // teal-600
+    backgroundColor: '#ccfbf1', // teal-100
   },
   ageButtonText: {
     textAlign: 'center',
     fontSize: 14,
     fontWeight: '500',
-    color: '#6b7280',
+    color: '#6b7280', // gray-500
   },
   selectedAgeText: {
-    color: '#ec4899',
+    color: '#0d9488', // teal-600
   },
   statsSection: {
     padding: 20,
@@ -583,7 +591,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#1f2937',
+    color: '#1f2937', // gray-900
     marginBottom: 15,
   },
   statsRow: {
@@ -592,7 +600,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff', // white
     padding: 15,
     borderRadius: 12,
     alignItems: 'center',
@@ -604,13 +612,13 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: '#6b7280', // gray-500
     fontWeight: '500',
     marginBottom: 5,
   },
   statValue: {
     fontSize: 14,
-    color: '#1f2937',
+    color: '#1f2937', // gray-900
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -618,7 +626,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   foodCard: {
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff', // white
     borderRadius: 12,
     padding: 16,
     marginBottom: 15,
@@ -637,7 +645,7 @@ const styles = StyleSheet.create({
   foodTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1f2937',
+    color: '#1f2937', // gray-900
     flex: 1,
   },
   safetyBadge: {
@@ -649,23 +657,23 @@ const styles = StyleSheet.create({
   safetyText: {
     fontSize: 12,
     fontWeight: '600',
-    color: 'white',
+    color: '#ffffff', // white
   },
   safeFood: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#10b981', // green-500
   },
   moderateFood: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#f59e0b', // yellow-500
   },
   cautionFood: {
-    backgroundColor: '#f97316',
+    backgroundColor: '#f97316', // orange-500
   },
   dangerFood: {
-    backgroundColor: '#ef4444',
+    backgroundColor: '#ef4444', // red-500
   },
   foodDescription: {
     fontSize: 14,
-    color: '#4b5563',
+    color: '#4b5563', // gray-600
     lineHeight: 20,
     marginBottom: 10,
   },
@@ -674,25 +682,25 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 13,
-    color: '#6b7280',
+    color: '#6b7280', // gray-500
     fontWeight: '500',
   },
   detailValue: {
-    color: '#1f2937',
+    color: '#1f2937', // gray-900
     fontWeight: '600',
   },
   forbiddenSection: {
-    backgroundColor: '#fee2e2',
+    backgroundColor: '#fef2f2', // red-50
     margin: 20,
     padding: 20,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#fecaca',
+    borderColor: '#fee2e2', // red-100
   },
   forbiddenTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#dc2626',
+    color: '#7f1d1d', // red-900
     marginBottom: 15,
   },
   forbiddenGrid: {
@@ -701,31 +709,31 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   forbiddenItem: {
-    backgroundColor: '#fef2f2',
+    backgroundColor: '#ffffff', // white
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#fecaca',
+    borderColor: '#fee2e2', // red-100
   },
   forbiddenText: {
     fontSize: 12,
-    color: '#7f1d1d',
+    color: '#7f1d1d', // red-900
     fontWeight: '500',
   },
   tipsSection: {
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#ccfbf1', // teal-100
     margin: 20,
     padding: 20,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e0f2fe',
+    borderColor: '#99f6e4', // teal-200
     marginBottom: 40,
   },
   tipsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0c4a6e',
+    color: '#134e4a', // teal-900
     marginBottom: 15,
   },
   tipItem: {
@@ -733,9 +741,9 @@ const styles = StyleSheet.create({
   },
   tipText: {
     fontSize: 14,
-    color: '#164e63',
+    color: '#134e4a', // teal-900
     lineHeight: 20,
   },
-})
+});
 
-export default Food
+export default Food;
