@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { Task } from "@/types/task";
 import { useLoader } from "@/context/LoaderContext";
 import { onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import GradientView, { GradientPresets } from "@/components/GradientView";
 
 const TasksScreen = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -81,7 +82,7 @@ const TasksScreen = () => {
   return (
     <View className="flex-1 bg-gray-100">
       {/* Header */}
-      <View className="bg-gradient-to-r from-teal-600 to-emerald-600 pt-12 pb-6 px-5 rounded-b-3xl shadow-md">
+      <GradientView colors={GradientPresets.tealToEmerald} className="pt-12 pb-6 px-5 rounded-b-3xl shadow-md">
         <View className="flex-row justify-between items-center mb-4">
           <View>
             <Text className="text-white text-4xl font-extrabold tracking-tight">
@@ -112,7 +113,7 @@ const TasksScreen = () => {
             className="flex-1 text-gray-900 text-base font-medium"
           />
         </View>
-      </View>
+      </GradientView>
 
       {/* Task List */}
       <ScrollView className="flex-1 px-5 mt-4" showsVerticalScrollIndicator={false}>

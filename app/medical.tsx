@@ -1,5 +1,8 @@
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import GradientView, { GradientPresets } from '../components/GradientView';
 
 interface MedicalItem {
   condition: string;
@@ -292,6 +295,7 @@ const medicalData: MedicalData = {
 const MedicalPage: React.FC = () => {
   const [selectedAge, setSelectedAge] = useState<'puppy' | 'adult' | 'senior'>('puppy');
   const [selectedAnimal, setSelectedAnimal] = useState<'dog' | 'cat' | 'rabbit'>('dog');
+  const navigation = useNavigation();
 
   const getUrgencyColor = (urgency: string): string => {
     switch (urgency) {
@@ -322,13 +326,19 @@ const MedicalPage: React.FC = () => {
   return (
     <View className="flex-1 bg-gray-100">
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View className="bg-gradient-to-r from-teal-600 to-emerald-600 p-5 pt-12 rounded-b-3xl">
+        {/* Header with Back Button */}
+        <GradientView colors={GradientPresets.tealToEmerald} className="p-5 pt-12 rounded-b-3xl relative">
+          <TouchableOpacity
+            className="absolute top-12 left-5 p-2 active:scale-95 transition-transform"
+            onPress={() => navigation.navigate('/(dashboard)/home')}
+          >
+            <Icon name="chevron-left" size={28} color="#ffffff" />
+          </TouchableOpacity>
           <Text className="text-3xl font-extrabold text-white text-center">Pet Medical Care</Text>
           <Text className="text-base text-teal-100 text-center mt-1 opacity-90">
             Health guidance by age and species
           </Text>
-        </View>
+        </GradientView>
 
         {/* Animal Selection */}
         <View className="flex-row px-5 py-5 gap-2">
@@ -404,7 +414,7 @@ const MedicalPage: React.FC = () => {
             {medicalData[selectedAnimal][selectedAge].title}
           </Text>
           {medicalData[selectedAnimal][selectedAge].items.map((item, index) => (
-            <View key={index} className="bg-white rounded-xl p-4 mb-4 shadow-sm border border-gray-200">
+            <View key={index} className="bg-white rounded-xl p-4 mb-4 border border-gray-200" style={styles.cardShadow}>
               <View className="flex-row justify-between items-start mb-2">
                 <Text className="text-lg font-semibold text-gray-900 flex-1">{item.condition}</Text>
                 <View className={`px-2 py-1 rounded-md ${getUrgencyColor(item.urgency)}`}>
@@ -449,5 +459,15 @@ const MedicalPage: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+});
 
 export default MedicalPage;

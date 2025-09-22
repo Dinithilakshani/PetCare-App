@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { register } from "@/services/authService";
-import { LinearGradient } from "expo-linear-gradient";
+import GradientView, { GradientPresets } from "../../components/GradientView";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const Register = () => {
@@ -50,8 +50,8 @@ const Register = () => {
     >
       <View className="flex-1 bg-gray-100">
         {/* Header */}
-        <LinearGradient
-          colors={["#0d9488", "#059669"]}
+        <GradientView
+          colors={GradientPresets.tealToEmerald}
           className="pb-8 pt-16 px-6 rounded-b-[40px] shadow-lg"
         >
           <View className="flex-row items-center justify-between">
@@ -67,7 +67,7 @@ const Register = () => {
             </View>
             <View className="w-12" />
           </View>
-        </LinearGradient>
+        </GradientView>
 
         <ScrollView className="flex-1 px-6 -mt-4" showsVerticalScrollIndicator={false}>
           {/* Register Form */}

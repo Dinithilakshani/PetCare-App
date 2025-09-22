@@ -30,6 +30,7 @@ const DashboardLayout = () => {
           headerShown: false,
           tabBarActiveTintColor: "#2ecc71",
           tabBarInactiveTintColor: "#2c3e50",
+          tabBarShowLabel: false,
           tabBarStyle: {
             backgroundColor: "#bdc3c7"
           }
@@ -63,12 +64,12 @@ const DashboardLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="profile"
+          name="setting"
           options={{
-            title: "Profile",
+            title: "Setting",
             tabBarIcon: (data) => (
               <MaterialIcons
-                name="person"
+                name="settings"
                 size={data.size}
                 color={data.color}
               />
@@ -76,12 +77,12 @@ const DashboardLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="setting"
+          name="profile"
           options={{
-            title: "Setting",
+            title: "Profile",
             tabBarIcon: (data) => (
               <MaterialIcons
-                name="settings"
+                name="person"
                 size={data.size}
                 color={data.color}
               />

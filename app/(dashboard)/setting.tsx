@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity, ScrollView, Switch, Alert } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Switch, Alert, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
+import GradientView, { GradientPresets } from '../../components/GradientView';
 
 const SettingsPage = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useRouter();
   const [notifications, setNotifications] = useState(true);
   const [locationServices, setLocationServices] = useState(true);
   const [biometricAuth, setBiometricAuth] = useState(false);
@@ -24,12 +25,15 @@ const SettingsPage = () => {
   const SettingItem = ({ icon, title, subtitle, onPress, rightElement, showArrow = true, iconBg = "from-teal-600 to-emerald-600" }) => (
     <TouchableOpacity
       onPress={onPress}
-      className="bg-white rounded-2xl p-4 flex-row items-center shadow-sm border border-gray-200 mb-3"
+      className="bg-white rounded-2xl p-4 flex-row items-center  border border-gray-200 mb-3"
       activeOpacity={0.7}
     >
-      <View className={`w-12 h-12 bg-gradient-to-br ${iconBg} rounded-xl items-center justify-center mr-4 shadow-md`}>
+      <GradientView
+        colors={GradientPresets.tealToEmerald}
+        className="w-12 h-12 rounded-xl items-center justify-center mr-4"
+      >
         <Text className="text-white text-xl">{icon}</Text>
-      </View>
+      </GradientView>
       <View className="flex-1">
         <Text className="text-gray-900 font-bold text-lg mb-1">{title}</Text>
         {subtitle && <Text className="text-gray-600 text-sm">{subtitle}</Text>}
@@ -42,29 +46,45 @@ const SettingsPage = () => {
     </TouchableOpacity>
   );
 
-  const SwitchItem = ({ icon, title, subtitle, value, onValueChange, iconBg = "from-teal-600 to-emerald-600" }) => (
-    <View className="bg-white rounded-2xl p-4 flex-row items-center shadow-sm border border-gray-200 mb-3">
-      <View className={`w-12 h-12 bg-gradient-to-br ${iconBg} rounded-xl items-center justify-center mr-4 shadow-md`}>
-        <Text className="text-white text-xl">{icon}</Text>
+  const SwitchItem = ({ icon, title, subtitle, value, onValueChange, iconBg = "from-teal-600 to-emerald-600" }) => {
+    const gradientColors = {
+      "from-teal-600 to-emerald-600": GradientPresets.tealToEmerald,
+      "from-blue-400 to-indigo-500": GradientPresets.blueToIndigo,
+      "from-purple-400 to-pink-500": GradientPresets.purpleToPink,
+      "from-gray-600 to-gray-800": GradientPresets.grayToDark,
+      "from-cyan-400 to-blue-500": GradientPresets.cyanToBlue,
+    };
+
+    return (
+      <View className="bg-white rounded-2xl p-4 flex-row items-center  border border-gray-200 mb-3">
+        <GradientView
+          colors={gradientColors[iconBg] || GradientPresets.tealToEmerald}
+          className="w-12 h-12 rounded-xl items-center justify-center mr-4"
+        >
+          <Text className="text-white text-xl">{icon}</Text>
+        </GradientView>
+        <View className="flex-1">
+          <Text className="text-gray-900 font-bold text-lg mb-1">{title}</Text>
+          {subtitle && <Text className="text-gray-600 text-sm">{subtitle}</Text>}
+        </View>
+        <Switch
+          value={value}
+          onValueChange={onValueChange}
+          trackColor={{ false: "#e5e7eb", true: "#0d9488" }}
+          thumbColor={value ? "#ffffff" : "#9ca3af"}
+          ios_backgroundColor="#e5e7eb"
+        />
       </View>
-      <View className="flex-1">
-        <Text className="text-gray-900 font-bold text-lg mb-1">{title}</Text>
-        {subtitle && <Text className="text-gray-600 text-sm">{subtitle}</Text>}
-      </View>
-      <Switch
-        value={value}
-        onValueChange={onValueChange}
-        trackColor={{ false: "#e5e7eb", true: "#0d9488" }}
-        thumbColor={value ? "#ffffff" : "#9ca3af"}
-        ios_backgroundColor="#e5e7eb"
-      />
-    </View>
-  );
+    );
+  };
 
   return (
     <View className="flex-1 bg-gray-100">
       {/* Header */}
-      <View className="bg-gradient-to-r from-teal-600 to-emerald-600 pb-6 pt-16 px-6 rounded-b-[40px] shadow-lg">
+      <GradientView 
+        colors={GradientPresets.tealToEmerald}
+        className="pb-6 pt-16 px-6 rounded-b-[40px]"
+      >
         <View className="flex-row items-center justify-between">
           <TouchableOpacity 
             onPress={() => navigation.goBack()}
@@ -80,19 +100,22 @@ const SettingsPage = () => {
           
           <View className="w-12" />
         </View>
-      </View>
+      </GradientView>
 
       <ScrollView className="flex-1 px-6 -mt-4" showsVerticalScrollIndicator={false}>
         {/* Profile Section */}
-        <View className="bg-white rounded-3xl p-6 shadow-xl border border-gray-200 mb-6 z-10">
+        <View className="bg-white rounded-3xl p-6  border border-gray-200 mb-6 z-10">
           <View className="flex-row items-center">
-            <View className="w-20 h-20 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-2xl items-center justify-center mr-4 shadow-lg">
+            <GradientView 
+              colors={GradientPresets.tealToEmerald}
+              className="w-20 h-20 rounded-2xl items-center justify-center mr-4"
+            >
               <Text className="text-white text-3xl">👤</Text>
-            </View>
+            </GradientView>
             <View className="flex-1">
               <Text className="text-gray-900 font-bold text-xl mb-1">Dinu Palliyaguru</Text>
               <Text className="text-gray-600 text-base mb-2">dinu.palliyaguru@email.com</Text>
-              <TouchableOpacity className="bg-teal-100 rounded-xl px-4 py-2 self-start">
+              <TouchableOpacity className="bg-teal-100 rounded-xl px-4 py-2 self-start" onPress={() => navigation.push('/(dashboard)/profile-edit')}>
                 <Text className="text-teal-700 font-bold text-sm">Edit Profile</Text>
               </TouchableOpacity>
             </View>
@@ -253,12 +276,12 @@ const SettingsPage = () => {
           
           <TouchableOpacity
             onPress={handleLogout}
-            className="bg-red-50 rounded-2xl p-4 flex-row items-center shadow-sm border border-red-100 mb-3"
+            className="bg-red-50 rounded-2xl p-4 flex-row items-center  border border-red-100 mb-3"
             activeOpacity={0.7}
           >
-            <View className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-500 rounded-xl items-center justify-center mr-4 shadow-md">
+            <GradientView colors={GradientPresets.redToRed} className="w-12 h-12 rounded-xl items-center justify-center mr-4">
               <Text className="text-white text-xl">🚪</Text>
-            </View>
+            </GradientView>
             <View className="flex-1">
               <Text className="text-red-700 font-bold text-lg mb-1">Logout</Text>
               <Text className="text-red-600 text-sm">Sign out of your account</Text>
@@ -270,12 +293,12 @@ const SettingsPage = () => {
           
           <TouchableOpacity
             onPress={() => Alert.alert("Delete Account", "This action cannot be undone")}
-            className="bg-gray-50 rounded-2xl p-4 flex-row items-center shadow-sm border border-gray-200 mb-3"
+            className="bg-gray-50 rounded-2xl p-4 flex-row items-center  border border-gray-200 mb-3"
             activeOpacity={0.7}
           >
-            <View className="w-12 h-12 bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl items-center justify-center mr-4 shadow-md">
+            <GradientView colors={GradientPresets.grayToGray} className="w-12 h-12 rounded-xl items-center justify-center mr-4">
               <Text className="text-white text-xl">⚠️</Text>
-            </View>
+            </GradientView>
             <View className="flex-1">
               <Text className="text-gray-700 font-bold text-lg mb-1">Delete Account</Text>
               <Text className="text-gray-600 text-sm">Permanently remove your account</Text>
@@ -290,7 +313,7 @@ const SettingsPage = () => {
         <View className="bg-teal-50 rounded-2xl p-4 items-center mb-8 border border-teal-100">
           <Text className="text-teal-600 font-semibold text-lg mb-2">Pet Care Pro</Text>
           <Text className="text-gray-600 text-sm">Version 2.1.0</Text>
-          <Text className="text-gray-500 text-xs mt-2">© 2024 Pet Care Solutions</Text>
+          <Text className="text-gray-500 text-xs mt-2"> 2024 Pet Care Solutions</Text>
         </View>
 
         {/* Bottom Spacing */}
@@ -299,5 +322,43 @@ const SettingsPage = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  headerShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  profileCardShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 15,
+  },
+  profileIconShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  settingItemShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  iconShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+});
 
 export default SettingsPage;

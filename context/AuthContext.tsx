@@ -9,10 +9,11 @@ import {
   useState
 } from "react"
 
-type AuthContextType = { user: User | null; loading: boolean }
+type AuthContextType = { user: User | null; loading: boolean; refreshUser: () => Promise<void> }
 const AUthContext = createContext<AuthContextType>({
   user: null,
-  loading: true
+  loading: true,
+  refreshUser: async () => {}
 })
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -27,8 +28,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return unsubcribe
   }, [])
 
+  const refreshUser = async () => {
+    try {
+      if (auth.currentUser) {
+        await auth.currentUser.reload()
+        // After reload, auth.currentUser has fresh profile fields
+        setUser(auth.currentUser)
+      }
+    } catch (e) {
+      // no-op; keep prior state
+      console.warn('refreshUser failed', e)
+    }
+  }
+
   return (
-    <AUthContext.Provider value={{ user, loading }}>
+    <AUthContext.Provider value={{ user, loading, refreshUser }}>
       {children}
     </AUthContext.Provider>
   )
