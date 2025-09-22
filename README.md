@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# 🐾 PetCare App  
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> 🐶 A simple, smart, and beautiful **React Native app** to manage your pets' health, food, and activities.  
+> 💚 Designed with love for animals, in a clean **green & white theme**.  
 
-## Get started
+---
 
-1. Install dependencies
+## 🌟 Highlights  
 
-   ```bash
-   npm install
-   ```
+📌 **Pet Profiles** – Add name, breed, age, medical history  
+📌 **Health Reminders** – Vaccination, vet visits, medication  
+📌 **Food Tracker** – Meals, diet plans, feeding history  
+📌 **Activities** – Bathing, walking, and grooming schedules  
+📌 **Dashboard** – Overview of all your pets in one place  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 📲 Download & Demo  
 
-In the output, you'll find options to open the app in a
+- **📥 APK File** → [Click to Download](https://your-apk-link.com)  
+- **🎥 YouTube Demo** → [Watch Here](https://youtube.com/your-demo-link)  
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<p align="center">
+  <img src="https://img.shields.io/badge/Android%20APK-4CAF50?style=for-the-badge&logo=android&logoColor=white" />
+  <img src="https://img.shields.io/badge/YouTube%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+</p>
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## ⚙️ Tech Stack  
 
-When you're ready, run:
+| Technology | Purpose |
+|------------|---------|
+| ⚛️ React Native | Mobile framework |
+| 🚀 Expo | Easy development & testing |
+| 🎨 Tailwind CSS (NativeWind) | Styling |
+| 🔥 Firebase | Backend & authentication |
+
+---
+
+## 🚀 Getting Started  
 
 ```bash
-npm run reset-project
-```
+# Clone repo
+git clone https://github.com/your-username/PetCare-App.git
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# Enter folder
+cd PetCare-App
 
-## Learn more
+# Install dependencies
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
+# Run project
+npm start
+🤝 Contributing
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+🙌 Contributions, ideas, and feedback are always welcome!
+Open an issue
+ or create a PR.
 
-## Join the community
+📧 Contact
 
-Join our community of developers creating universal apps.
+📩 Email: dinithipalliyaguru@gmail.com
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+🐙 GitHub: https://github.com/Dinithilakshani
+
+<h3 align="center">💚 Built for pet lovers, by pet lovers 🐕🐾🐈</h3> ```
