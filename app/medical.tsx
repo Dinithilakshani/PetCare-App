@@ -1,9 +1,8 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from "expo-router"; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import GradientView, { GradientPresets } from '../components/GradientView';
-
 interface MedicalItem {
   condition: string;
   description: string;
@@ -293,33 +292,25 @@ const medicalData: MedicalData = {
 };
 
 const MedicalPage: React.FC = () => {
+  const router = useRouter();   // ✅ hook inside component
   const [selectedAge, setSelectedAge] = useState<'puppy' | 'adult' | 'senior'>('puppy');
   const [selectedAnimal, setSelectedAnimal] = useState<'dog' | 'cat' | 'rabbit'>('dog');
-  const navigation = useNavigation();
 
   const getUrgencyColor = (urgency: string): string => {
     switch (urgency) {
-      case 'high':
-        return 'bg-red-500';
-      case 'medium':
-        return 'bg-orange-400';
-      case 'low':
-        return 'bg-green-400';
-      default:
-        return 'bg-blue-400';
+      case 'high': return 'bg-red-500';
+      case 'medium': return 'bg-orange-400';
+      case 'low': return 'bg-green-400';
+      default: return 'bg-blue-400';
     }
   };
 
   const getUrgencyText = (urgency: string): string => {
     switch (urgency) {
-      case 'high':
-        return 'High Priority';
-      case 'medium':
-        return 'Moderate';
-      case 'low':
-        return 'Low Priority';
-      default:
-        return 'Routine Care';
+      case 'high': return 'High Priority';
+      case 'medium': return 'Moderate';
+      case 'low': return 'Low Priority';
+      default: return 'Routine Care';
     }
   };
 
@@ -328,12 +319,13 @@ const MedicalPage: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header with Back Button */}
         <GradientView colors={GradientPresets.tealToEmerald} className="p-5 pt-12 rounded-b-3xl relative">
-          <TouchableOpacity
-            className="absolute top-12 left-5 p-2 active:scale-95 transition-transform"
-            onPress={() => navigation.navigate('/(dashboard)/home')}
-          >
-            <Icon name="chevron-left" size={28} color="#ffffff" />
-          </TouchableOpacity>
+         <TouchableOpacity
+  className="absolute top-12 left-5 p-2 active:scale-95 transition-transform"
+  onPress={() => router.push("/home")} // Use valid route as in other usages
+>
+  <Icon name="chevron-left" size={28} color="#ffffff" />
+</TouchableOpacity>
+
           <Text className="text-3xl font-extrabold text-white text-center">Pet Medical Care</Text>
           <Text className="text-base text-teal-100 text-center mt-1 opacity-90">
             Health guidance by age and species
@@ -343,9 +335,9 @@ const MedicalPage: React.FC = () => {
         {/* Animal Selection */}
         <View className="flex-row px-5 py-5 gap-2">
           <TouchableOpacity
-            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 text-gray-500 font-semibold text-center ${
+            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 ${
               selectedAnimal === 'dog' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAnimal('dog')}
           >
             <Text className={`text-base ${selectedAnimal === 'dog' ? 'text-teal-600' : 'text-gray-500'}`}>
@@ -353,9 +345,9 @@ const MedicalPage: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 text-gray-500 font-semibold text-center ${
+            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 ${
               selectedAnimal === 'cat' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAnimal('cat')}
           >
             <Text className={`text-base ${selectedAnimal === 'cat' ? 'text-teal-600' : 'text-gray-500'}`}>
@@ -363,9 +355,9 @@ const MedicalPage: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 text-gray-500 font-semibold text-center ${
+            className={`flex-1 bg-white py-4 rounded-xl border-2 border-teal-100 ${
               selectedAnimal === 'rabbit' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAnimal('rabbit')}
           >
             <Text className={`text-base ${selectedAnimal === 'rabbit' ? 'text-teal-600' : 'text-gray-500'}`}>
@@ -377,9 +369,9 @@ const MedicalPage: React.FC = () => {
         {/* Age Selection */}
         <View className="flex-row px-5 pb-5 gap-2">
           <TouchableOpacity
-            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 text-gray-500 font-medium text-center ${
+            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 ${
               selectedAge === 'puppy' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAge('puppy')}
           >
             <Text className={`text-sm ${selectedAge === 'puppy' ? 'text-teal-600' : 'text-gray-500'}`}>
@@ -387,9 +379,9 @@ const MedicalPage: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 text-gray-500 font-medium text-center ${
+            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 ${
               selectedAge === 'adult' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAge('adult')}
           >
             <Text className={`text-sm ${selectedAge === 'adult' ? 'text-teal-600' : 'text-gray-500'}`}>
@@ -397,9 +389,9 @@ const MedicalPage: React.FC = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 text-gray-500 font-medium text-center ${
+            className={`flex-1 bg-white py-3 rounded-lg border border-teal-100 ${
               selectedAge === 'senior' ? 'border-teal-500 bg-teal-100' : ''
-            } active:scale-95 transition-transform`}
+            }`}
             onPress={() => setSelectedAge('senior')}
           >
             <Text className={`text-sm ${selectedAge === 'senior' ? 'text-teal-600' : 'text-gray-500'}`}>
