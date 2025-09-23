@@ -17,8 +17,8 @@
 
 ## 📲 Download & Demo  
 
-- **📥 APK File** → [Click to Download](https://your-apk-link.com)  
-- **🎥 YouTube Demo** → [Watch Here](https://youtube.com/your-demo-link)  
+- **📥 APK File** → [Click to Download](https://drive.google.com/file/d/1soy529IxyjB2xuJxgzt4-FaNdcC0ICfa/view?usp=sharing)  
+- **🎥 YouTube Demo** → [Watch Here](https://youtu.be/q42kaUpPOlU?si=BnVsMuu6WbDnyGs4)  
 
 <p align="center">
   <img src="https://img.shields.io/badge/Android%20APK-4CAF50?style=for-the-badge&logo=android&logoColor=white" />
