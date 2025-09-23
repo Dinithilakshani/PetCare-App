@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { useRouter } from "expo-router"; 
+import { useRouter, Link } from "expo-router"; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import GradientView, { GradientPresets } from '../components/GradientView';
 interface MedicalItem {
@@ -319,12 +319,15 @@ const MedicalPage: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header with Back Button */}
         <GradientView colors={GradientPresets.tealToEmerald} className="p-5 pt-12 rounded-b-3xl relative">
-         <TouchableOpacity
+         <Link href="/home" asChild>
+           <TouchableOpacity
   className="absolute top-12 left-5 p-2 active:scale-95 transition-transform"
-  onPress={() => router.push("/home")} // Use valid route as in other usages
+  style={{ zIndex: 10, elevation: 10 }}
+  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
 >
   <Icon name="chevron-left" size={28} color="#ffffff" />
 </TouchableOpacity>
+         </Link>
 
           <Text className="text-3xl font-extrabold text-white text-center">Pet Medical Care</Text>
           <Text className="text-base text-teal-100 text-center mt-1 opacity-90">

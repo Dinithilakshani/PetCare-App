@@ -16,16 +16,24 @@ import { db } from "@/firebase"
 // for refer to collection
 export const taskColRef = collection(db, "tasks")
 
+// Utility: remove undefined values so Firestore doesn't error on write
+const stripUndefined = <T extends Record<string, any>>(obj: T): T => {
+  const entries = Object.entries(obj).filter(([, v]) => v !== undefined)
+  return Object.fromEntries(entries) as T
+}
+
 // firebase firestore
 export const createTask = async (task: Task) => {
-  const docRef = await addDoc(taskColRef, task)
+  const cleanTask = stripUndefined(task)
+  const docRef = await addDoc(taskColRef, cleanTask)
   return docRef.id
 }
 
 export const updateTask = async (id: string, task: Task) => {
   const docRef = doc(db, "tasks", id)
   const { id: _id, ...taskData } = task
-  return await updateDoc(docRef, taskData)
+  const cleanTaskData = stripUndefined(taskData)
+  return await updateDoc(docRef, cleanTaskData)
 }
 
 export const deleteTask = async (id: string) => {

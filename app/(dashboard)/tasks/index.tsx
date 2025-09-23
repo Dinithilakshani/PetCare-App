@@ -57,9 +57,12 @@ const TasksScreen = () => {
   };
 
   const filteredTasks = tasks.filter(
-    (task) =>
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase())
+    (task) => {
+      const title = (task.title ?? "").toString().toLowerCase()
+      const desc = (task.description ?? "").toString().toLowerCase()
+      const query = (searchQuery ?? "").toString().toLowerCase()
+      return title.includes(query) || desc.includes(query)
+    }
   );
 
   const getTaskIcon = (task: Task) => {

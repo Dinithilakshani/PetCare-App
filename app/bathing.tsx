@@ -1,7 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Bathing = () => {
+  const router = useRouter();
   const [selectedPetType, setSelectedPetType] = useState('dog');
 
   const petTypes = [
@@ -147,6 +150,14 @@ const Bathing = () => {
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.7}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+          onPress={() => router.navigate('/home')}
+        >
+          <Icon name="chevron-left" size={28} color="#ffffff" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Pet Bathing Guide</Text>
         <Text style={styles.headerSubtitle}>Keep your pets clean and healthy</Text>
       </View>
@@ -238,6 +249,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#0d9488',
     padding: 20,
     paddingTop: 50,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 16,
+    padding: 8,
+    zIndex: 10,
   },
   headerTitle: {
     fontSize: 28,
@@ -416,4 +434,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Bathing;
+export default Bathing; 

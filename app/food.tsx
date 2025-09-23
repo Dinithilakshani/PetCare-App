@@ -1,7 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Food = () => {
+  const router = useRouter();
   const [selectedAge, setSelectedAge] = useState('puppy');
   const [selectedAnimal, setSelectedAnimal] = useState('dog');
 
@@ -368,6 +371,14 @@ const Food = () => {
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.7}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+          onPress={() => router.navigate('/home')}
+        >
+          <MaterialIcons name="chevron-left" size={28} color="#ffffff" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Pet Nutrition Guide</Text>
         <Text style={styles.headerSubtitle}>Feeding guidelines by age and species</Text>
       </View>
@@ -518,6 +529,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#0d9488', // teal-600 (simulating gradient with single color for simplicity)
     padding: 20,
     paddingTop: 50,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    padding: 8,
+    zIndex: 10,
   },
   headerTitle: {
     fontSize: 28,
