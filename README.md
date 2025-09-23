@@ -17,7 +17,7 @@
 
 ## 📲 Download & Demo  
 
-- **📥 APK File** → [Click to Download](https://your-apk-link.com)  
+- **📥 APK File** → [Click to Download](https://drive.google.com/file/d/1soy529IxyjB2xuJxgzt4-FaNdcC0ICfa/view?usp=sharing)  
 - **🎥 YouTube Demo** → [Watch Here](https://youtu.be/q42kaUpPOlU?si=BnVsMuu6WbDnyGs4)  
 
 <p align="center">
